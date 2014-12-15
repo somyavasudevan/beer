@@ -12,6 +12,8 @@ echo $supply;
 echo $order;
 echo $round;
 
+
+//Flag-2 stands for order so same for supply..dont update table just insert new row like below
 if($flag==2){
 $sql = "INSERT INTO player (playerid, round, placedorder, supply, flag)
 VALUES ('21',$round,$order,$supply,$flag)";
