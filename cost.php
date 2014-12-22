@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once("config.lib.php");
 if(isset($_POST['icost'])){
 	$icost=$_POST['icost']+$_POST['inv']*2;
@@ -7,9 +8,10 @@ if(isset($_POST['icost'])){
 	echo ' ';
 	echo $bcost;
 	
+$id=$_POST['id'];
 
 $sql = "INSERT INTO cost (playerid, icost, bcost)
-VALUES ('21',$icost,$bcost)";
+VALUES ($id,$icost,$bcost)";
 
 if ($conn->query($sql) === TRUE) {
     echo " New record created successfully";

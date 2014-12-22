@@ -1,21 +1,23 @@
-var i=0;
+
 function cost(){
        $.ajax({
            type: "POST", 
            url: "cost.php",
-		   data:{icost:$('#Icost').text(),bcost:$('#Bcost').text(),porder:$('#Porder').text(),inv:$('#Inv').text()},
+		   data:{id:curr,icost:$('#Icost>span').text(),bcost:$('#Bcost>span').text(),porder:$('#Porder').text(),inv:$('#Inv').text()},
            success: function(data){
               // do something with data
 			  var res=data.split(" ");
-			 $("#Icost").text(res[0]);
-			 $("#Bcost").text(res[1]);
+			 $("#Icost>span").text(res[0]);
+			 $("#Bcost>span").text(res[1]);
 			 //alert(res[2]);
+			 //alert(data);
+			 console.log(data);
+			
            }
 
        });
-	   i++;
 	   
-	   if(i==7){
-			clearInterval(id);}
+	  /* if(i==7){
+			clearInterval(id);}*/
    };
-   var id=setInterval(cost, 10000);
+   var id=setInterval(cost, 5000);

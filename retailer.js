@@ -6,14 +6,15 @@ function poll(){
 		   data:{index:i},
            success: function(data){
               // do something with data
-			 $("#yo").text(data);
-			 alert("New order");
+			 //alert("New order"+data);
+			 console.log(i);
+			 $('#Porder').text(parseInt($('#Porder').text())+parseInt(data));
            }
 
        });
 	   i++;
 	   
 	   if(i==7){
-			clearInterval(id);}
+			clearInterval(clear);}
    };
-   var id=setInterval(poll, 5000);
+   var clear=setInterval(poll, 20000);
