@@ -81,7 +81,8 @@ echo "<script>var curr=".$curr.";var prev="."$prev".";</script>"
      var flag=0;
 
 	 function supply(){  
-                         flag=1;               
+                         flag=1;    
+						if(($('#supply').val()<=parseInt($('#Inv').text())) && ($('#supply').val()<=parseInt($('#Porder').text()))){
                          $.ajax({
                             type:"post",
                             url:"player.php",
@@ -93,9 +94,15 @@ echo "<script>var curr=".$curr.";var prev="."$prev".";</script>"
                                 //$("#result").html(data);
 								alert(data);
 								$('#Porder').text(parseInt($('#Porder').text())-parseInt($('#supply').val()));
+								$('#Inv').text(parseInt($('#Inv').text())-parseInt($('#supply').val()));
+								alert("supplied");
                              },
                              
-                          });
+                          });}
+						  
+						  else{
+						alert("Invalid Transaction");}
+						  
                       }
               function order(){  
                          flag=2;               
@@ -107,7 +114,7 @@ echo "<script>var curr=".$curr.";var prev="."$prev".";</script>"
                                    round:$('#Round>span').text(),
                                    f:flag},
                             success:function(data){
-                                //alert("order has been placed");
+                                alert("order has been placed");
                       }
                              });
                              
