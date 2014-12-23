@@ -6,7 +6,7 @@ function poll(){
 		   data:{index:i},
            success: function(data){
               // do something with data
-			 //alert("New order"+data);
+			 alert("New order"+data);
 			 console.log(i);
 			 $('#Porder').text(parseInt($('#Porder').text())+parseInt(data));
            }
