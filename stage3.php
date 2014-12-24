@@ -21,7 +21,9 @@ echo "<script>var curr=".$curr.";var next=".$next.";var prev="."$prev".";</scrip
 <script src="transaction.js"></script>
 <link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
 <link rel="stylesheet" type="text/css" href="lightbox.css">
+<!-- Magnific Popup core JS file -->
 <script src="magnific-popup/jquery.magnific-popup.js"></script>
+
 <link rel="stylesheet" type="text/css" href="layout.css">
 </head>
 
@@ -42,12 +44,12 @@ echo "<script>var curr=".$curr.";var next=".$next.";var prev="."$prev".";</scrip
 	<p id="Round">Round No:<span>1</span></p>
 <div class="innerBox1">
 <center>
-	<h2>WHOLESALER</h2>
+	<h2>CUSTOMER</h2>
 </center>
 </div>
 <div class="innerBox2">
 <center>
-	<h2>DISTRIBUTER</h2>
+	<h2>RETAILER</h2>
 </center>
 <div id="orderdiv" >
 	<p>ORDER:</p>
@@ -69,19 +71,41 @@ echo "<script>var curr=".$curr.";var next=".$next.";var prev="."$prev".";</scrip
 </div>
 <div class="innerBox3">
 <center>
-	<h2>FACTORY</h2>
+	<h2>WHOLESALER</h2>
 </center>
 </div>
 </div>
 <button onclick="show()">View Transactions</button>
 </body>
+
+
 <script type="text/javascript">
 
-     var flag=0;
 
-	 function supply(){  
-                         flag=1;      
+
+  var flag=0,backup=1;
+
+////////////////START //////////////////////////////////////////////////////////////////////////////////////
+  function supplybackup()
+       {
+                         $.ajax({
+                            type:"post",
+                            url:"player.php",
+							//YOU HAD USED .VAL() HERE
+                            data: {curr:curr,backup:'1',inventory:$('#Inv').text(),porder:$('#Porder').text()},
+                            success:function(data){
+                              console.log(data);
+                            }
+                               });
+       }
+//////////////////END ///////////////////////////////////////////////////////////////////////////////////////////////////////       
+	
+
+   function supply(){  
+                         flag=1;
 						if(($('#supply').val()<=parseInt($('#Inv').text())) && ($('#supply').val()<=parseInt($('#Porder').text()))){
+							
+						
                          $.ajax({
                             type:"post",
                             url:"player.php",
@@ -90,10 +114,12 @@ echo "<script>var curr=".$curr.";var next=".$next.";var prev="."$prev".";</scrip
                                    round:$('#Round>span').text(),
                                    f:flag},
                             success:function(data){
-                                alert(data);
+                                //$("#result").html(data);
+								//alert(data);
 								$('#Porder').text(parseInt($('#Porder').text())-parseInt($('#supply').val()));
 								$('#Inv').text(parseInt($('#Inv').text())-parseInt($('#supply').val()));
 								alert("supplied");
+								supplybackup();
                              },
                              
                           });}
@@ -101,6 +127,9 @@ echo "<script>var curr=".$curr.";var next=".$next.";var prev="."$prev".";</scrip
 						  else{
 						alert("Invalid Transaction");}
                       }
+
+
+
               function order(){  
                          flag=2;               
                          $.ajax({
@@ -112,37 +141,67 @@ echo "<script>var curr=".$curr.";var next=".$next.";var prev="."$prev".";</scrip
                                    f:flag},
                             success:function(data){
                                 alert("order has been placed");
-								//alert(data);
-                      }
+                             
+
+                          }
                              });
                              
                       }
     
-setInterval(function(){$.ajax({
-                            type:"post",
-                            url:"player.php",
-                            data: {curr:curr,prev:prev},
-                            success:function(data){console.log(data);
-                                if(data!='None')
-                                 {setTimeout(function(){ alert(data);var res = data.split(" ");
-								 //alert(res[3]);
-								 $('#Porder').text(parseInt($('#Porder').text())+parseInt(res[5])) }, 5000); } 
-                                 }
-                             });}, 1000);           
- 
 
- setInterval(function(){$.ajax({
+
+  setInterval(function(){$.ajax({
                             type:"post",
                             url:"player.php",
                             data: {curr:curr,next:next},
                             success:function(data){
                                 if(data!='None')
-                                 {setTimeout(function(){ alert(data);var res = data.split(" ");
+                                 {setTimeout(function(){ alert(data);
+								 var res = data.split(" ");
 								 //alert(res[3]);
-								 $('#Inv').text(parseInt($('#Inv').text())+parseInt(res[3]))
-								 }, 5000); } 
+								 $('#Inv').text(parseInt($('#Inv').text())+parseInt(res[3]));}, 5000);
+								supplybackup();} 
+                             
+
                                  }
-                             });}, 1000);       
-                      
+                             });}, 1000);         
+
+            
+  setInterval(function(){$.ajax({
+                            type:"post",
+                            url:"player.php",
+                            data: {curr:curr,prev:prev},
+                            success:function(data){console.log(data);
+                                if(data!='None')
+                                 {setTimeout(function(){ alert(data); var res = data.split(" ");
+								 //alert(res[5]);
+								 $('#Porder').text(parseInt($('#Porder').text())+parseInt(res[5]))}, 5000);
+                                                                  supplybackup();} 
+                                 }
+                             });}, 1000);   
+
+
+          window.onbeforeunload = function() {
+        return "Do not Refresh the game. You will lose all data."; }
+
+        window.onload=function(){
+          backup=1;
+                    $.ajax({
+                            type:"post",
+                            url:"backup.php",
+                            data: {backup:'1',curr:curr},
+                            success:function(data){
+							var res = data.split(" ");
+							$('#Inv').text(parseInt(res[0]));
+							$('#Porder').text(parseInt(res[1]));
+							$('#Icost>span').text(parseInt(res[2]));
+							$('#Bcost>span').text(parseInt(res[3]));
+                              
+                            }
+                               });
+                  }
+
+
+         
 </script>
 </html>

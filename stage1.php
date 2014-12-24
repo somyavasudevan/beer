@@ -10,8 +10,8 @@ while($row = mysqli_fetch_array($result))
   $curr=$row['Player1']; $next=$row['Player2']; 
   }
 
-//echo $curr.$next;
-echo "<script>var curr=".$curr.";var next=".$next.";</script>"
+
+echo "<script>var curr=$curr;var next=$next;</script>";
 ?>
 <html>
 <head>
@@ -79,49 +79,98 @@ echo "<script>var curr=".$curr.";var next=".$next.";</script>"
 </body>
 <script type="text/javascript">
 
-     var flag=0;
 
-	 function supply(){  
+
+  var flag=0,backup=1;
+
+  function supplybackup()
+       {
+                         $.ajax({
+                            type:"post",
+                            url:"player.php",
+                            data: {curr:curr,backup:'1',inventory:$('#Inv').text(),porder:$('#Porder').text()},
+                            success:function(data){
+                              console.log(data);
+                            }
+                               });
+       }
+	
+
+   function supply(){  
                          flag=1;    
 						if(($('#supply').val()<=parseInt($('#Inv').text())) && ($('#supply').val()<=parseInt($('#Porder').text()))){
 							$('#Porder').text(parseInt($('#Porder').text())-parseInt($('#supply').val()));
 							$('#Inv').text(parseInt($('#Inv').text())-parseInt($('#supply').val()));
-							alert("supplied");}
+							alert("supplied"); 
+							supplybackup();
+
+            }
 							
 						else{
 						alert("Invalid Transaction");}
                          
                       }
+
+
+
               function order(){  
                          flag=2;               
                          $.ajax({
                             type:"post",
                             url:"player.php",
                             data: {id:curr,order:$('#order').val(),
-									supply:'0',
+				   supply:'0',
                                    round:$('#Round>span').text(),
                                    f:flag},
                             success:function(data){
-                                //alert("order has been placed");
-                      }
+                                alert("order has been placed");
+                             
+
+                          }
                              });
                              
                       }
     
+
+
   setInterval(function(){$.ajax({
                             type:"post",
                             url:"player.php",
                             data: {curr:curr,next:next},
                             success:function(data){
                                 if(data!='None')
-                                 {setTimeout(function(){ alert(data);
+                                 {setTimeout(function(){ console.log("hey".data);alert(data);
 								 var res = data.split(" ");
 								 //alert(res[3]);
-								 $('#Inv').text(parseInt($('#Inv').text())+parseInt(res[3]));}, 5000); } 
+								 $('#Inv').text(parseInt($('#Inv').text())+parseInt(res[3]));}, 5000);
+								supplybackup();} 
+                             
+
                                  }
                              });}, 1000);         
 
-          
+         
+
+
+          window.onbeforeunload = function() {
+        return "Do not Refresh the game. You will lose all data."; }
+
+        window.onload=function(){
+          backup=1;
+                    $.ajax({
+                            type:"post",
+                            url:"backup.php",
+                            data: {backup:'1',curr:curr},
+                            success:function(data){
+							var res = data.split(" ");
+							$('#Inv').text(parseInt(res[0]));
+							$('#Porder').text(parseInt(res[1]));
+							$('#Icost>span').text(parseInt(res[2]));
+							$('#Bcost>span').text(parseInt(res[3]));
+                              
+                            }
+                               });
+                  }
          
 </script>
 </html>

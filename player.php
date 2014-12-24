@@ -105,5 +105,39 @@ $found=mysqli_num_rows($result);
 	echo "None";
  }
  }
+ 
+ if(isset($_POST["backup"]) && isset($_POST["curr"]))
+ {
+$backup=$_POST["backup"];
+$curr=$_POST["curr"];
+$inventory=$_POST["inventory"];
+$porder=$_POST["porder"];
+
+  $sql= "SELECT * FROM  `backup` WHERE  `id` = '$curr'";
+  $result=mysqli_query($conn,$sql); 
+  $found=mysqli_num_rows($result); 
+
+
+
+
+if ($found>=1) {
+  if(isset($_POST['inventory']) && isset($_POST["porder"]))
+    {$sql1="UPDATE  `backup` SET  `inventory` =$inventory,`pendingorder` =$porder WHERE  `id` ='$curr'";
+       if ($conn->query($sql1) === TRUE) {echo "updated" ;}
+        else echo " Error: " . $sql . "<br>" . $conn->error;
+    }
+  
+}
+else {
+   if(isset($_POST['inventory'])&&isset($_POST['porder']))
+    {$sql1="INSERT INTO  `backup` (`id`,`inventory`,`pendingorder`) VALUES ($curr,$inventory,$porder)";
+     if ($conn->query($sql1) === TRUE) {echo $curr;}
+     else echo " Error: " . $sql . "<br>" . $conn->error;
+    }
+  
+}
+
+
+}
 
 ?>

@@ -78,11 +78,31 @@ echo "<script>var curr=".$curr.";var prev="."$prev".";</script>"
 </body>
 <script type="text/javascript">
 
-     var flag=0;
 
-	 function supply(){  
-                         flag=1;    
+
+  var flag=0,backup=1;
+
+////////////////START //////////////////////////////////////////////////////////////////////////////////////
+  function supplybackup()
+       {
+                         $.ajax({
+                            type:"post",
+                            url:"player.php",
+							//YOU HAD USED .VAL() HERE
+                            data: {curr:curr,backup:'1',inventory:$('#Inv').text(),porder:$('#Porder').text()},
+                            success:function(data){
+                              console.log(data);
+                            }
+                               });
+       }
+//////////////////END ///////////////////////////////////////////////////////////////////////////////////////////////////////       
+	
+
+   function supply(){  
+flag=1;
 						if(($('#supply').val()<=parseInt($('#Inv').text())) && ($('#supply').val()<=parseInt($('#Porder').text()))){
+							
+						
                          $.ajax({
                             type:"post",
                             url:"player.php",
@@ -92,49 +112,79 @@ echo "<script>var curr=".$curr.";var prev="."$prev".";</script>"
                                    f:flag},
                             success:function(data){
                                 //$("#result").html(data);
-								alert(data);
+								//alert(data);
 								$('#Porder').text(parseInt($('#Porder').text())-parseInt($('#supply').val()));
 								$('#Inv').text(parseInt($('#Inv').text())-parseInt($('#supply').val()));
 								alert("supplied");
+								supplybackup();
                              },
                              
                           });}
 						  
 						  else{
 						alert("Invalid Transaction");}
-						  
+                         
                       }
+
+
+
               function order(){  
                          flag=2;               
                          $.ajax({
                             type:"post",
                             url:"player.php",
                             data: {id:curr,order:$('#order').val(),
-									supply:'0',
+				   supply:'0',
                                    round:$('#Round>span').text(),
                                    f:flag},
                             success:function(data){
-                                alert("order has been placed");
-                      }
+                                //alert("order has been placed");
+                             
+
+                          }
                              });
                              
                       }
-            
- 
+    
 
- setInterval(function(){$.ajax({
+
+  
+            
+  setInterval(function(){$.ajax({
                             type:"post",
                             url:"player.php",
                             data: {curr:curr,prev:prev},
-                            success:function(data){
+                            success:function(data){console.log(data);
                                 if(data!='None')
-                                 {setTimeout(function(){ alert(data); 
-								 var res = data.split(" ");
-								 //alert(res[3]);
-								 $('#Porder').text(parseInt($('#Porder').text())+parseInt(res[5]))}, 5000); } 
+                                 {setTimeout(function(){ alert(data); var res = data.split(" ");
+								 //alert(res[5]);
+								 $('#Porder').text(parseInt($('#Porder').text())+parseInt(res[5]))}, 5000);
+                                                                  supplybackup();} 
                                  }
-                             });}, 1000);  
-                      
-</script>
+                             });}, 1000);   
 
+
+          window.onbeforeunload = function() {
+        return "Do not Refresh the game. You will lose all data."; }
+
+        window.onload=function(){
+          backup=1;
+                    $.ajax({
+                            type:"post",
+                            url:"backup.php",
+                            data: {backup:'1',curr:curr},
+                            success:function(data){
+							var res = data.split(" ");
+							$('#Inv').text(parseInt(res[0]));
+							$('#Porder').text(parseInt(res[1]));
+							$('#Icost>span').text(parseInt(res[2]));
+							$('#Bcost>span').text(parseInt(res[3]));
+                              
+                            }
+                               });
+                  }
+
+
+         
+</script>
 </html>
