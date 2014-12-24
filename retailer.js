@@ -17,4 +17,4 @@ function poll(){
 	   if(i==7){
 			clearInterval(clear);}
    };
-   var clear=setInterval(poll, 20000);
+   var clear=setInterval(poll, 100000);
