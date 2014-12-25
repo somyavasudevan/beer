@@ -21,6 +21,8 @@ background-color:beige;
  border: 1px solid black;
  }
 
+h3{
+color:black;}
  
 
 .details p{
@@ -99,5 +101,18 @@ left:10px;
 	
 	.field{
 	width:50px;
+	}
+
+.login{
+	height:90%;
+	background:white;
+	margin:40px auto;
+	border: 3px solid black;
+        border-radius: 5px;
+	top:-3%;
+	position:absolute;
+        left:10%;
+	width:80%;
+	
 	}
 	
