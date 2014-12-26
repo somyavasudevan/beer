@@ -15,16 +15,15 @@ echo "<script>var curr=$curr;var next=$next;</script>";
 ?>
 <html>
 <head>
-<script type="text/javascript" src="jquery.js"></script>
-<script src="retailer.js"></script>
-<script src="stage.js"></script>
-<script src="transaction.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="js/retailer.js"></script>
+<script src="js/stage.js"></script>
+<script src="js/transaction.js"></script>
 <link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
-<link rel="stylesheet" type="text/css" href="lightbox.css">
 <!-- Magnific Popup core JS file -->
 <script src="magnific-popup/jquery.magnific-popup.js"></script>
 
-<link rel="stylesheet" type="text/css" href="layout.css">
+<link rel="stylesheet" type="text/css" href="css/layout.css">
 </head>
 
 <body>

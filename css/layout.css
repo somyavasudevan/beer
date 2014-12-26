@@ -1,5 +1,5 @@
 body{
-background: url(images/beer5.jpg) no-repeat center center fixed; 
+background: url(../images/beer5.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -116,3 +116,13 @@ left:10px;
 	
 	}
 	
+	
+	.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width:auto;
+  max-width: 500px;
+  margin: 20px auto;
+  color:black;
+}

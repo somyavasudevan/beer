@@ -17,13 +17,12 @@ echo "<script>var curr=".$curr.";var prev="."$prev".";</script>"
 
 <html>
 <head>
-<script type="text/javascript" src="jquery.js"></script>
-<script src="stage.js"></script>
-<script src="transaction.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="js/stage.js"></script>
+<script src="js/transaction.js"></script>
 <link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
-<link rel="stylesheet" type="text/css" href="lightbox.css">
 <script src="magnific-popup/jquery.magnific-popup.js"></script>
-<link rel="stylesheet" type="text/css" href="layout.css">
+<link rel="stylesheet" type="text/css" href="css/layout.css">
 </head>
 
 <body>

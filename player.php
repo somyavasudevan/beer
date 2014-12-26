@@ -30,7 +30,8 @@ $conn->close();
 
 
 if(isset($_POST['show'])){
-$id=$_SESSION['id'];
+$id=$_POST['id'];
+echo $id;
 $query ="SELECT * FROM player WHERE playerid=$id";
 $result=mysqli_query($conn,$query);
 $found=mysqli_num_rows($result); 

@@ -55,10 +55,10 @@
                             url:"check.php",
                             data: {s:s},
                             success:function(data){
-                              if(data==1){var frm=document.getElementById('f1');document.getElementById('f1').action="stage1.php";frm.submit();}
-                              else if (data==2) {var frm=document.getElementById('f1');document.getElementById('f1').action="stage2.php";frm.submit();}
-                              else if (data==3) {var frm=document.getElementById('f1');document.getElementById('f1').action="stage3.php";frm.submit();}
-                              else if (data==4) {var frm=document.getElementById('f1');document.getElementById('f1').action="stage4.php";frm.submit();}
+                              if(data==1){var frm=document.getElementById('f1');document.getElementById('f1').action="retailerStage.php";frm.submit();}
+                              else if (data==2) {var frm=document.getElementById('f1');document.getElementById('f1').action="wholesalerStage.php";frm.submit();}
+                              else if (data==3) {var frm=document.getElementById('f1');document.getElementById('f1').action="DistributerStage.php";frm.submit();}
+                              else if (data==4) {var frm=document.getElementById('f1');document.getElementById('f1').action="FactoryStage.php";frm.submit();}
                               else {alert("YOUR ID DOES NOT EXIST. ENTER A VALID ID")};
                             }
                                });
