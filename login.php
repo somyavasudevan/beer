@@ -34,15 +34,6 @@
 <form method="post" id="f1">
 <input type="hidden" name="name" id="1">
 </form>
-<!--form action="stage2.php" method="post" id="f2">
-<input type="hidden" name="name" id="2">
-</form>
-<form action="stage3.php" method="post" id="f3">
-<input type="hidden" name="name" id="3">
-</form>
-<form action="stage4.php" method="post" id="f4">
-<input type="hidden" name="name" id="4">
-</form-->
 </body>
 </html>
 
