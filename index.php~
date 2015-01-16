@@ -1,0 +1,52 @@
+
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js"></script>
+<link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
+
+<!-- Magnific Popup core JS file -->
+
+
+<link rel="stylesheet" type="text/css" href="css/layout.css">
+</head>
+
+<body>
+<center>
+	<h1>BEER Factory</h1>
+</center>
+
+
+<div class="box effect">
+	<div class="login">
+        
+        <br><br>
+        <p><center><h3>LOGIN WITH YOUR ID</h3></center></p> 
+        <center><h3>ID:       <input type="ID" id="loginid"></h3>
+        </center>
+        <center>
+        	<button onclick="check($('#loginid').val())">LOGIN</button>
+        </center>
+	</div>
+
+
+
+</div>
+<form method="post" id="f1">
+<input type="hidden" name="name" id="1">
+</form>
+</body>
+</html>
+
+<script>
+	function check(s) { 
+                document.getElementById('1').value=s;
+                
+                $.ajax({
+                            type:"post",
+                            url:"check.php",
+                            data: {s:s},
+                            success:function(data){
+                                                            });
+
+	}
+</script>
