@@ -6,12 +6,30 @@ background: url(../images/beer5.jpg) no-repeat center center fixed;
   background-size: cover;
   color:white;
   }
+
+/*.main
+{
+background-image: url(../images/beer5.jpg);
+-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color:white;
+}*/
+
+
   
-  
+#supplyTo,#pending1,#pending2,#orderTo
+{
+display:none;
+}  
+
+
+
+
+
 h1{
 color:black;
-background-color:rgba(240,230,140,0.4);
- box-shadow:1px 1px 30px 1px yellow inset;
 }
 
 h2{
@@ -38,36 +56,58 @@ font-size:120%;
 top:-3%;
 }
 
-#Icost,#Bcost{
+#Icost,#Bcost,#bankres,#ul,#ce{
 color:black;
 font-size:150%;
 position:absolute;
 font-weight: bold;
 }
 
-#Bcost{
-right:10px;
-}
-
-#Icost{
-left:10px;
-}
-
 
 .box {
-	width:70%;
-	height:75%;
+	width:30%;
+	height:85%;
 	background:#090F0F;
-	margin:40px auto;
+	margin:1% auto;
 	border: 2px solid black;
-    border-radius: 25px;
 	box-shadow:1px 1px 70px 1px grey inset;
 	background-color: rgba(9,15,15,0.9);
 	position:absolute;
-	left:15%;
+	left:35%;
 }
 
-.innerBox1,.innerBox2,.innerBox3{
+.box3
+{
+        height:80%;
+	background:white;
+	border: 3px solid black;
+        border-radius: 5px;
+ 	top:15%;
+	position:absolute;
+        width:25%;
+        left:70%;
+
+}
+
+.box3
+{
+    color:black;
+font-size:105%;
+}
+
+.cost{
+	width:25%;
+	height:40%;
+	top:30%;
+	position:absolute;
+	left:5%;
+
+	
+}
+
+
+
+.innerBox2{
 	height:90%;
 	background:white;
 	margin:40px auto;
@@ -77,15 +117,19 @@ left:10px;
 	position:absolute;
 	}
 
-	.innerBox1{
-	left:3%;
-	width:25%;
+.innerBox1{
+	height:90%;
+	background:white;
+	border: 3px solid black;
+    border-radius: 5px;
+	top:5%;
+	position:absolute;
 	}
-	
-	
+
+
 	.innerBox2{
-	left:30%;
-	width:40%;
+	left:10%;
+	width:80%;
 	text-align:center;
 	}
 	
@@ -93,11 +137,17 @@ left:10px;
 	color:black;
 	border-bottom-style: dotted;
 	}
-	
-	.innerBox3{
-	right:3%;
-	width:25%;
+
+	.innerBox1{
+	left:10%;
+	width:80%;
+	text-align:center;
 	}
+	
+	.innerBox1 p{
+	color:black;
+	}
+	
 	
 	.field{
 	width:50px;

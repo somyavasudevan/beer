@@ -2,7 +2,6 @@
 <html>
 <head>
 <script type="text/javascript" src="js/jquery.js"></script>
-<link rel="stylesheet" href="magnific-popup/magnific-popup.css"> 
 
 <!-- Magnific Popup core JS file -->
 

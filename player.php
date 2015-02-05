@@ -6,6 +6,7 @@ if(isset($_POST["f"])){
 $supply=$_POST["supply"];
 $order=$_POST["order"];
 $round=$_POST["round"];
+$to=$_POST["to"];
 $flag=$_POST["f"];
 $seen=0;
 $id=$_POST["id"];
@@ -13,8 +14,8 @@ $id=$_POST["id"];
 
 //Flag-2 stands for order so same for supply..dont update table just insert new row like below
 if($flag==2 || $flag==1){
-$sql = "INSERT INTO player (playerid, round, placedorder, supply, flag, seen)
-VALUES ($id,$round,$order,$supply,$flag,$seen)";
+$sql = "INSERT INTO player (playerid, round, placedorder, supply, flag, seen,sendto)
+VALUES ($id,$round,$order,$supply,$flag,$seen,$to)";
 
 if ($conn->query($sql) === TRUE) {
     echo " New record created successfully";
@@ -59,11 +60,11 @@ else {echo "No records found";} }
 
 
 if(isset($_POST["curr"])){
-if(isset($_POST["prev"])){
-$prev=$_POST["prev"];
+if($_POST["flag"]==2){
+$curr=$_POST["curr"];
 $query ="SELECT * 
 FROM  `player` 
-WHERE  `playerid` =  '$prev' AND `seen`='0' AND `flag`='2'
+WHERE  `sendto` =  '$curr' AND `seen`='0' AND `flag`='2'
 ORDER BY `sno` DESC
 LIMIT 1 ";
 $set=0;
@@ -74,19 +75,21 @@ $found=mysqli_num_rows($result);
   while($row = mysqli_fetch_array($result))
   {
   echo 'You have an order of '.$row['placedorder']; 
+  echo " ".$row['playerid']."";
   $set=1;
   } 
-  $query ="UPDATE player SET seen='1' WHERE playerid =  '$prev' AND seen='0' ORDER BY sno DESC LIMIT 1"; 
+  $query ="UPDATE player SET seen='1' WHERE sendto =  '$curr' AND seen='0' ORDER BY sno DESC LIMIT 1"; 
   $result=mysqli_query($conn,$query); }  }
   if($set==0)
 	echo "None";
  }
  
- if(isset($_POST["next"])){
-$next=$_POST["next"];
+ 
+  if($_POST["flag"]==1){
+$curr=$_POST["curr"];
 $query ="SELECT * 
 FROM  `player` 
-WHERE  `playerid` =  '$next' AND `seen`='0' AND `flag`='1'
+WHERE  `sendto` =  '$curr' AND `seen`='0' AND `flag`='1'
 ORDER BY `sno` DESC
 LIMIT 1 ";
 $set=0;
@@ -98,14 +101,17 @@ $found=mysqli_num_rows($result);
   while($row = mysqli_fetch_array($result))
   {
   echo "you have received ".$row['supply']." Items"; 
+  echo " ".$row['playerid']."";
   $set=1;
   } 
-  $query ="UPDATE `player` SET `seen`='1' WHERE  `playerid` =  '$next' AND `seen`='0' ORDER BY `sno` DESC LIMIT 1"; 
+  $query ="UPDATE `player` SET `seen`='1' WHERE  `sendto` =  '$curr' AND `seen`='0' ORDER BY `sno` DESC LIMIT 1"; 
   $result=mysqli_query($conn,$query); }  }
   if($set==0)
 	echo "None";
  }
  }
+
+
  
  if(isset($_POST["backup"]) && isset($_POST["curr"]))
  {
@@ -113,6 +119,8 @@ $backup=$_POST["backup"];
 $curr=$_POST["curr"];
 $inventory=$_POST["inventory"];
 $porder=$_POST["porder"];
+$reserve=$_POST["reserve"];
+$capacity=$_POST["capacity"];
 
   $sql= "SELECT * FROM  `backup` WHERE  `id` = '$curr'";
   $result=mysqli_query($conn,$sql); 
@@ -123,7 +131,7 @@ $porder=$_POST["porder"];
 
 if ($found>=1) {
   if(isset($_POST['inventory']) && isset($_POST["porder"]))
-    {$sql1="UPDATE  `backup` SET  `inventory` =$inventory,`pendingorder` =$porder WHERE  `id` ='$curr'";
+    {$sql1="UPDATE  `backup` SET  `inventory` =$inventory,`pendingorder` =$porder ,`reserve` =$reserve , `capacity` =$capacity WHERE  `id` ='$curr'";
        if ($conn->query($sql1) === TRUE) {echo "updated" ;}
         else echo " Error: " . $sql . "<br>" . $conn->error;
     }
@@ -131,7 +139,7 @@ if ($found>=1) {
 }
 else {
    if(isset($_POST['inventory'])&&isset($_POST['porder']))
-    {$sql1="INSERT INTO  `backup` (`id`,`inventory`,`pendingorder`) VALUES ($curr,$inventory,$porder)";
+    {$sql1="INSERT INTO  `backup` (`id`,`inventory`,`pendingorder`,`reserve`,`capacity`) VALUES ($curr,$inventory,$porder,$reserve,$capacity)";
      if ($conn->query($sql1) === TRUE) {echo $curr;}
      else echo " Error: " . $sql . "<br>" . $conn->error;
     }

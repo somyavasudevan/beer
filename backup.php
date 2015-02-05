@@ -18,6 +18,7 @@ if (isset($_POST['backup']) && isset($_POST['curr']))
   while($row = mysqli_fetch_array($result))
   {
    $var1= $row['inventory']; $var2=$row['pendingorder'];
+   $var3= $row['reserve'];$var4= $row['capacity'];
   $set=1;
   } 
    }  
@@ -26,11 +27,11 @@ if (isset($_POST['backup']) && isset($_POST['curr']))
     }
 	
 	if($set==0){
-	echo '20 30';
+	echo '20 30 1000 30';
 	}
 
   else{//ELSE REQUIRED
-  echo $var1." ".$var2;
+  echo $var1." ".$var2." ".$var3." ".$var4;
   }
 
   
@@ -40,7 +41,7 @@ if (isset($_POST['backup']) && isset($_POST['curr']))
   $sql= "SELECT * FROM  `cost` WHERE  `playerid` ='$curr' ORDER BY `sno` DESC LIMIT 1";
     $set=0;
     if ($conn->query($sql) == TRUE)
-    { echo "hey";
+    { 
 
   $result=mysqli_query($conn,$sql);
   if($result){
